@@ -4,14 +4,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.time.LocalDateTime;
 
 public final class AutoRestart extends JavaPlugin implements Listener {
 
-    public static long WAIT_HOURS = 12;
-    public static long GRACE_MINUTES = 15;
+    public static long WAIT_SECONDS = 30;
+    public static long GRACE_SECONDS = 15;
     private LocalDateTime waitTime;
     private LocalDateTime gracePeriod;
     private boolean graceStartLogged;
@@ -20,7 +19,7 @@ public final class AutoRestart extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        waitTime = LocalDateTime.now().plusHours(WAIT_HOURS);
+        waitTime = LocalDateTime.now().plusSeconds(WAIT_SECONDS);
 
         new BukkitRunnable() {
             @Override
@@ -39,7 +38,7 @@ public final class AutoRestart extends JavaPlugin implements Listener {
                     return;
                 }
                 if (gracePeriod == null) {
-                    gracePeriod = LocalDateTime.now().plusMinutes(GRACE_MINUTES);
+                    gracePeriod = LocalDateTime.now().plusSeconds(GRACE_SECONDS);
                     return;
                 }
                 if (isGracePeriodOver()) {
